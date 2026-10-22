@@ -88,18 +88,35 @@ $("prompt").addEventListener("keydown", (event) => { if ((event.ctrlKey || event
 
 $("ask-puter").addEventListener("click", async () => {
   const prompt = $("prompt").value.trim();
-  if (!prompt) return toast("Enter a prompt for Puter");
-  if (!window.puter?.ai?.chat) return toast("Puter is unavailable");
-  $("puter-response").textContent = "Requesting response...";
+  if (!prompt) return toast("Enter a task for Argon");
+  const gateway = localStorage.getItem("astra-argon-gateway") || $("argon-gateway").value.trim() || "/api/argon";
+  const tool = $("argon-tool").value;
+  const argumentsByTool = {
+    argon_delegate: { task: prompt },
+    argon_compress: { content: prompt },
+    argon_code: { instruction: prompt },
+    argon_reason: { problem: prompt },
+    argon_research: { query: prompt }
+  };
+  $("argon-gateway").value = gateway;
+  localStorage.setItem("astra-argon-gateway", gateway);
+  $("puter-response").textContent = "Argon is working...";
+  $("puter-state").textContent = "Running";
   try {
-    const response = await window.puter.ai.chat(prompt);
-    const text = typeof response === "string" ? response : response?.message?.content || JSON.stringify(response);
-    $("puter-response").textContent = text;
+    const response = await fetch(gateway, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ tool, arguments: argumentsByTool[tool] })
+    });
+    const data = await response.json().catch(() => ({ error: "Invalid gateway response" }));
+    if (!response.ok) throw new Error(data.error || `Request failed (${response.status})`);
+    $("puter-response").textContent = typeof data.text === "string" ? data.text : JSON.stringify(data, null, 2);
     $("puter-state").textContent = "Connected";
-    recordEpisode(prompt, { id: "puter" }, "puter-response");
+    recordEpisode(prompt, { id: "puter" }, "argon-response");
   } catch (error) {
     $("puter-response").textContent = error.message;
-    toast("Puter request failed");
+    $("puter-state").textContent = "Unavailable";
+    toast("Argon request failed");
   }
 });
 

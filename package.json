@@ -6,6 +6,7 @@
   "scripts": {
     "start": "python3 -m http.server 4173",
     "test": "node --test",
-    "check": "node --check src/policy.js && node --check src/app.js && node --test"
+    "check": "node --check src/policy.js && node --check src/app.js && node --check api/argon.js && node --check api/mcp.js && node --test",
+    "package": "npm run check && mkdir -p dist && cp index.html styles.css package.json dist/ && cp -r src dist/"
   }
 }

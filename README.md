@@ -26,6 +26,17 @@ Learning is opt-in. Enable **Learning Loop** in the application to let ASTRA eva
 
 Policy updates are limited to the repository-defined value ranges in `src/policy.js`. Puter requests are sent only when the user clicks **Ask Puter**.
 
+## Argon MCP gateway
+
+A Vercel serverless gateway connects Astra to Argon's five tools while keeping credentials out of browser code.
+
+1. Import this repository into Vercel.
+2. Add an environment variable named `ARGON_KEY` containing your Argon connector bearer key.
+3. Deploy. Argon's MCP gateway will be available at `/api/mcp`, and direct Astra calls at `/api/argon`.
+4. In the Astra UI, enter the deployed `https://YOUR-PROJECT.vercel.app/api/argon` URL when Astra is hosted separately on GitHub Pages.
+
+Add the deployed `/api/mcp` URL to a remote MCP client as a complete MCP connector. Argon tools available to Astra are `argon_delegate`, `argon_compress`, `argon_code`, `argon_reason`, and `argon_research`.
+
 ## Publish
 
 Pushes to `main` run [ASTRA validation](.github/workflows/ci.yml). GitHub Pages deployment is handled by [the Pages workflow](.github/workflows/pages.yml).

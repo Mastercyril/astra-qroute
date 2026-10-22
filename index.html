@@ -31,9 +31,19 @@
           <pre id="qasm-result" class="output">Waiting for QASM.</pre>
         </section>
         <section class="panel puter-panel">
-          <div class="panel-head"><h2>Puter Bridge</h2><span id="puter-state">Not signed in</span></div>
-          <div id="puter-response" class="output">Puter remains dormant until a request is sent.</div>
-          <button id="ask-puter" class="secondary">Ask Puter</button>
+          <div class="panel-head"><h2>Argon MCP</h2><span id="puter-state">Gateway ready</span></div>
+          <label for="argon-gateway">Gateway URL</label>
+          <input id="argon-gateway" value="/api/argon" spellcheck="false">
+          <label for="argon-tool">Argon tool</label>
+          <select id="argon-tool">
+            <option value="argon_delegate">Delegate</option>
+            <option value="argon_compress">Compress</option>
+            <option value="argon_code">Code</option>
+            <option value="argon_reason">Reason</option>
+            <option value="argon_research">Research</option>
+          </select>
+          <div id="puter-response" class="output">Argon remains dormant until a request is sent.</div>
+          <button id="ask-puter" class="secondary">Run on Argon</button>
         </section>
         <section class="panel episode-panel">
           <div class="panel-head"><h2>Episodes</h2><span id="episode-count">0 records</span></div>
