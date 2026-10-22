@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10100f">
+  <title>ASTRA Q-Route</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://js.puter.com/v2/"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="mark">A</span><div><strong>ASTRA</strong><small>Q-Route</small></div></div>
+    <div class="status"><span id="health-dot"></span><span id="health-text">STANDBY</span></div>
+  </header>
+  <main>
+    <section class="workspace">
+      <div class="command-panel">
+        <label for="prompt">Route command</label>
+        <div class="prompt-row">
+          <textarea id="prompt" rows="3" placeholder="Describe a task, inspect a QASM circuit, or export an episode..."></textarea>
+          <button id="run" class="primary" title="Run command">Run</button>
+        </div>
+        <div class="route-result" id="route-result">Select a route or enter a command.</div>
+      </div>
+      <div class="grid">
+        <section class="panel qasm-panel">
+          <div class="panel-head"><h2>QASM Workbench</h2><button id="sample" class="text-button">Load sample</button></div>
+          <textarea id="qasm" spellcheck="false" aria-label="QASM source"></textarea>
+          <div class="actions"><button id="validate-qasm">Validate</button><button id="paste-qasm">Paste</button></div>
+          <pre id="qasm-result" class="output">Waiting for QASM.</pre>
+        </section>
+        <section class="panel puter-panel">
+          <div class="panel-head"><h2>Puter Bridge</h2><span id="puter-state">Not signed in</span></div>
+          <div id="puter-response" class="output">Puter remains dormant until a request is sent.</div>
+          <button id="ask-puter" class="secondary">Ask Puter</button>
+        </section>
+        <section class="panel episode-panel">
+          <div class="panel-head"><h2>Episodes</h2><span id="episode-count">0 records</span></div>
+          <div id="episode-list" class="episode-list"></div>
+          <div class="actions"><button id="export-episodes">Export JSON</button><label class="upload">Import JSON<input id="import-episodes" type="file" accept="application/json"></label></div>
+        </section>
+        <section class="panel learning-panel">
+          <div class="panel-head"><h2>Learning Loop</h2><label class="switch"><input id="learning-toggle" type="checkbox"><span></span>Active</label></div>
+          <div class="metrics"><div><span>Policy</span><strong id="policy-version">v1</strong></div><div><span>Cycles</span><strong id="cycle-count">0</strong></div><div><span>Last cycle</span><strong id="last-cycle">Never</strong></div></div>
+          <pre id="policy-data" class="output"></pre>
+        </section>
+      </div>
+    </section>
+  </main>
+  <div id="toast" role="status"></div>
+  <script type="module" src="src/app.js"></script>
+</body>
+</html>
